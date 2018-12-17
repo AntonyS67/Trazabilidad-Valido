@@ -21,6 +21,46 @@ function mostrar_ocultar_menu_reportes(id1){
         document.getElementById('bajar').className='fa fa-chevron-down':document.getElementById('bajar').className='fa fa-chevron-up';
     }
 }
+function mostrar_ocultar_contenido_mensaje(id){
+    if(document.getElementById){
+        var el=document.getElementById(id);    
+        if(el.style.display=='none'){
+            el.style.display='block';
+            document.getElementById('mensajeTodos').style.display='none';
+            document.getElementById('responderMensaje').style.display='none';
+        }else if(el.style.display=='block'){
+            el.style.display='none';
+        }
+        // el.style.display=(el.style.display=='none') ? 
+        // 'block':'none';
+        // el.style.display=(el.style.display=='block') ? 
+        // 'none':'block';
+    }
+}
+function mostrar_ocultar_mensaje_todos(id){
+    if(document.getElementById){
+        var el=document.getElementById(id);
+        if(el.style.display=='none'){
+            el.style.display='block';
+            document.getElementById('contenidoMensaje').style.display='none';
+            document.getElementById('responderMensaje').style.display='none';
+        }else{
+            el.style.display='none';
+        }
+    }
+}
+function mostrar_ocultar_responder(id){
+    if(document.getElementById){
+        var el=document.getElementById(id);
+        if(el.style.display=='none'){
+            el.style.display='block';
+            document.getElementById('contenidoMensaje').style.display='none';
+            document.getElementById('mensajeTodos').style.display='none';
+        }else{
+            el.style.display='none';
+        }
+    }
+}
 /*=============================================
     RELOJ DINÁMICO        
 =============================================*/
