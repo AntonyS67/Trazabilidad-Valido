@@ -78,9 +78,7 @@ class TipotramiteModel
         } else {
             return "error";
         }
-
         $stmt->close();
-
     }
 
     public function eliminarTipotramiteModel($datosModel, $tabla)
@@ -91,17 +89,10 @@ class TipotramiteModel
         $stmt->bindParam(":id_tipo_tramite", $datosModel, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-
             return "ok";
-
         } else {
-
             return "error";
-
         }
-
-        $stmt->close();
-
     }
 
     public function buscarTipotramiteModel($datosModel, $tabla)

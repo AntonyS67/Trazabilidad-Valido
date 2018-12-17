@@ -36,7 +36,6 @@ class TipotramiteController
                             </div>
                             <div class="modal-body">
                                 <form action="" method="post">
-                                    <label for="" class="control-label">Id</label>
                                     <input type="hidden" name="id_tipo_tramite" value="' . $item["id_tipo_tramite"] . '">
                                     <div class="form-group">
                                         <label for="" class="control-label">Nombre de Tramite</label>
@@ -56,19 +55,12 @@ class TipotramiteController
                     </div>
                 </div>
                 </tr>';
-
-
         }
-
-
     }
 
     public function guardarTipotramiteController()
     {
-
         if (isset($_POST["nombre_tipo_tramite_nuevo"]) && isset($_POST["descripcion_nuevo"])) {
-
-
             //Se Instancian de la clase UsuarioModel
             $alm = new TipotramiteModel();
             $alm->nombre_tipo_tramite = $_POST["nombre_tipo_tramite_nuevo"];
@@ -76,11 +68,10 @@ class TipotramiteController
 
             //luego se registran los datos
             $this->model = new TipotramiteModel();
-            $respuesta=$this->model->Registrar($alm);
+            $respuesta = $this->model->Registrar($alm);
             if ($respuesta == "ok") {
                 echo '<script>
                     window.location="tipotramite";
-                    console.log("porla ")
                 </script>';;
             }
         }
