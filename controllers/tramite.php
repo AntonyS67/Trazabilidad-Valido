@@ -73,9 +73,7 @@ class TramiteController
                                         <option value="Finalizado">Finalizado</option>
                                     </select>
                                 </div>
-                                ';
-
-            echo ' <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
                                  </form>
                                 </div>
                                 <div class="modal-footer">
@@ -93,7 +91,6 @@ class TramiteController
         if (
             isset($_POST["cod_estudiante_nuevo"]) &&
             isset($_POST["id_tipo_tramite_nuevo"]) &&
-            isset($_POST["fecha_inicio_nuevo"]) &&
             isset($_POST["fecha_fin_nuevo"]) &&
             isset($_POST["estado_nuevo"])
         ) {

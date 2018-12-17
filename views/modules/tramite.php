@@ -52,13 +52,13 @@ include "views/modules/cabezote.php";
                                 <label for="" class="control-label">Fecha Inicio</label>
                                 <input type="text" name="fecha_inicio_nuevo"
                                        class="form-control"
-                                       placeholder="Ingrese el codigo de Estudiante">
+                                       placeholder="Ingrese la Fecha de Inicio">
                             </div>
                             <div class="form-group">
-                                <label for="" class="control-label">Fecha Inicio</label>
+                                <label for="" class="control-label">Fecha Fin</label>
                                 <input type="text" name="fecha_fin_nuevo"
                                        class="form-control"
-                                       placeholder="Ingrese el codigo de Estudiante">
+                                       placeholder="Puede dejar este campo vacio">
                             </div>
                             <div class="form-group">
                                 <label for=""
