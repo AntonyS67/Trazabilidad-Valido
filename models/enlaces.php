@@ -9,6 +9,7 @@
                $enlaces == "mensajes" ||
                $enlaces == "tipotramite" ||
                $enlaces == "perfil" ||
+               $enlaces == "tramite" ||
                $enlaces == "salir"){
     
                 $module = "views/modules/".$enlaces.".php";
