@@ -18,9 +18,6 @@
             else if($enlaces == "index"){
                 $module = "views/modules/ingreso.php";
             }
-
-            
-    
             else{
                 $module = "views/modules/ingreso.php";		
             }

@@ -58,7 +58,7 @@ class TramiteController
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="control-label">Fecha de Inicio</label>
-                                    <input type="text" class="form-control" name="fecha_inicio" placeholder="Ingresa tu Segundo Nombre" value="' . $item["fecha_inicio"] . '">
+                                    <input type="date" step="1" min="'.date("Y-m-d").'" class="form-control" name="fecha_inicio" placeholder="Ingresa tu Segundo Nombre" value="' . $item["fecha_inicio"] . '">
                                 </div>
                                  <div class="form-group">
                                     <label for="" class="control-label">Fecha Fin</label>

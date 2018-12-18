@@ -17,6 +17,7 @@ include "views/modules/cabezote.php";
                 <input type="search" name="buscarUsuario" placeholder="Buscar por DNI o Usuario">
                 <button class="btn btn-default fas fa-search" type="submit" ></button>
                 <button type="button" class="btn btn-default nuevo-user" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus">Nuevo</i></button>
+                <a href="html2pdf/pdf/imprimirUsuario.php" target="blank"><input type="button" class="btn btn-default nuevo-user" name="imprimir" value="Imprimir"></a>
             </form>
            
             <!-- Modal -->

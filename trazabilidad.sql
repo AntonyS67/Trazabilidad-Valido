@@ -46,7 +46,7 @@ create table if not exists t_usuarios
   segundo_nombre varchar(20)  not null default '',
   ap_paterno     varchar(20)  not null default '',
   ap_materno     varchar(20)  not null default '',
-  dni            integer(8),
+  dni            varchar(8),
   celular        varchar(9),
   sexo           varchar(10)  not null,
   `password`     varchar(30)  not null,
@@ -97,21 +97,41 @@ VALUES ('leovr7', 'leorvr7@gmail.com', 'Leonardo', 'Ray', 'Villar', 'Rodríguez'
         '81195', 4, 0, 1, '2018-12-12');
 
 
-select *
-from t_usuarios;
+
+
+/* Crear Tabla Tipo_Secretaria */
+create table if not exists t_tipo_secretaria
+(
+  id_tipo_secretaria   integer(11) not null auto_increment,
+  nombre_tipo_secretaria varchar(30) not null default '',
+  constraint `pk_secretaria` primary key (`id_tipo_secretaria`)
+)
+  engine = InnoDB
+  default charset = utf8mb4;
+  
+insert into `t_tipo_secretaria` (`nombre_tipo_secretaria`) value ('Escuela');
+insert into `t_tipo_secretaria` (`nombre_tipo_secretaria`) value ('Departamento');
+insert into `t_tipo_secretaria` (`nombre_tipo_secretaria`) value ('Decanatura');
+insert into `t_tipo_secretaria` (`nombre_tipo_secretaria`) value ('Consejo');
+
+
 
 /* Crear tabla Secretaria */
 create table if not exists t_secretaria
 (
   id_secretaria   integer(11) not null auto_increment,
   id_user         integer(11) not null,
-  tipo_secretaria varchar(20) not null default '',
+  id_tipo_secretaria integer(11) not null  ,
   constraint `pk_secretaria` primary key (`id_secretaria`),
   key `fk_id_user` (`id_user`),
-  constraint foreign key (`id_user`) references t_usuarios (`id_user`) on delete cascade on update cascade
+  constraint foreign key (`id_user`) references t_usuarios (`id_user`) on delete cascade on update cascade,
+  key `fk_id_tipo_secretaria` (`id_tipo_secretaria`),
+  constraint foreign key (`id_tipo_secretaria`) references t_tipo_secretaria (`id_tipo_secretaria`) on delete cascade on update cascade
 )
   engine = InnoDB
   default charset = utf8mb4;
+
+
 
 
 /* Crear Tabla Director */
@@ -227,9 +247,16 @@ insert into t_tipo_tramite(nombre_tipo_tramite, descripcion)
 VALUES ('Bachiller', 'Solicitud para obtener el grado de Bachiller'),
        ('Titulo Profesional', 'Soliitud para obtener el titulo profesional');
 
-select *
-from t_tramite;
+
+
 
 insert into t_tramite(cod_estudiante, id_tipo_tramite, fecha_inicio, fecha_fin, estado)
 VALUES ('0201614025', 1, '12-12-2018', '', 'Iniciado'),
        ('0201614028', 1, '12-12-2018', '', 'iniciado');
+       
+       select * from t_usuarios;
+select * from t_secretaria;
+
+select ti.nombre_tipo_secretaria from 
+            t_secretaria se,t_tipo_secretaria ti where 
+se.id_tipo_secretaria = ti.id_tipo_secretaria and id_user= 6;

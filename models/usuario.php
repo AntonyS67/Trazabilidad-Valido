@@ -23,7 +23,7 @@ class UsuarioModel{
     public function mostrarUsuariosModel($tabla1,$tabla2,$tabla3){
         $con=new Conexion();
         $stmt = $con->conectar()->prepare("SELECT $tabla1.id_user,$tabla1.primer_nombre,$tabla1.segundo_nombre,
-        $tabla1.ap_paterno,$tabla1.ap_materno,$tabla1.dni,$tabla1.celular,$tabla1.sexo,
+        $tabla1.ap_paterno,$tabla1.ap_materno,$tabla1.dni,$tabla1.celular,$tabla1.sexo,$tabla1.password,
         $tabla1.usuario, $tabla1.email,$tabla2.tipo_user,$tabla1.id_estado,$tabla1.fecha_registro,
         $tabla3.tipo_estado FROM $tabla1,$tabla2,$tabla3 where 
         $tabla1.id_tipo_user = $tabla2.id_tipo_user AND $tabla1.id_estado = $tabla3.id_estado"  );

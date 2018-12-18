@@ -1,10 +1,4 @@
 <?php
- require_once 'models/usuario.php';
- require_once 'models/secretaria.php';
- require_once 'models/director.php';
- require_once 'models/estudiante.php';
-
-
 class UsuarioController{
     private $model;
     private $model_secretaria;
@@ -23,106 +17,122 @@ class UsuarioController{
         $respuesta=$usuarioModel->mostrarUsuariosModel("t_usuarios","t_tipo_usuario","t_estados");
         
         foreach($respuesta as $row =>$item){
-        echo '<tr>
-                <td>'.$item["dni"].'</td>
-                <td>'.wordwrap($item["primer_nombre"].' '.$item["segundo_nombre"].' '.$item["ap_paterno"].' '.$item["ap_materno"],20,"<br />\n").'</td>
-                <td>'.$item["usuario"].'</td>
-                <td>'.$item["tipo_estado"].'</td>
-                <td>'.$item["sexo"].'</td>
-                <td>'.$item["email"].'</td>
-                <td>'.$item["celular"].'</td>
-                <td>'.$item["tipo_user"].'</td>
-                <td>'.$item["fecha_registro"].'</td>
-                <td>
-                    <a href="#myModalModificar'.$item["id_user"].'" data-toggle="modal"><span  class="btn btn-info far fa-edit modificar"></span></a>
-                </td>
-                <td>
-                <a href="index.php?action=usuario&idBorrar='.$item["id_user"].'"><span class="btn btn-danger fa fa-times eliminar"></span></a>
-                </td>
-               
-                <!-- Modal -->
-                <div class="modal fade" id="myModalModificar'.$item["id_user"].'" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h4 class="modal-title">Modificar Usuario</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" method="post">
-                                    <input type="hidden" name="id_user" value="'.$item["id_user"].'">
+            echo '<tr>
+                    <td>'.$item["dni"].'</td>
+                    <td>'.wordwrap($item["primer_nombre"].' '.$item["segundo_nombre"].' '.$item["ap_paterno"].' '.$item["ap_materno"],20,"<br />\n").'</td>
+                    <td>'.$item["usuario"].'</td>
+                    <td>'.$item["tipo_estado"].'</td>
+                    <td>'.$item["sexo"].'</td>
+                    <td>'.$item["email"].'</td>
+                    <td>'.$item["celular"].'</td>
+                    <td>'.$item["tipo_user"].'</td>
+                    <td>'.$item["fecha_registro"].'</td>
+                    <td>
+                        <a href="#myModalModificar'.$item["id_user"].'" data-toggle="modal"><span  class="btn btn-info far fa-edit modificar"></span></a>
+                    </td>
+                    <td>
+                    <a href="index.php?action=usuario&idBorrar='.$item["id_user"].'"><span class="btn btn-danger fa fa-times eliminar"></span></a>
+                    </td>
+                   
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalModificar'.$item["id_user"].'" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title">Modificar Usuario</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" method="post">
+                                        <input type="hidden" name="id_user" value="'.$item["id_user"].'">
+                                        <div class="form-group">
+                                        <label for="" class="control-label">DNI</label>
+                                         <input type="text" class="form-control" name="dniEditar" placeholder="Ingresa tu dni" value="'.$item["dni"].'">
+                                    </div>
                                     <div class="form-group">
-                                    <label for="" class="control-label">DNI</label>
-                                     <input type="text" class="form-control" name="dniEditar" placeholder="Ingresa tu dni" value="'.$item["dni"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Primer Nombre</label>
-                                    <input type="text" class="form-control" name="primerNombreEditar" placeholder="Ingresa tu Primer Nombre" value="'.$item["primer_nombre"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Segundo Nombre</label>
-                                    <input type="text" class="form-control" name="segundoNombreEditar" placeholder="Ingresa tu Segundo Nombre" value="'.$item["segundo_nombre"].'">
-                                </div>
-                                 <div class="form-group">
-                                    <label for="" class="control-label">Apellido Paterno</label>
-                                    <input type="text" class="form-control" name="apellidoPaternoEditar" placeholder="Ingresa tu Apellido Paterno" value="'.$item["ap_paterno"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Apellido Materno</label>
-                                    <input type="text" class="form-control" name="apellidoMaternoEditar" placeholder="Ingresa tu Apellido Materno" value="'.$item["ap_materno"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Usuario</label>
-                                    <input type="text" class="form-control" name="usuarioEditar" placeholder="Ingresa tu Usuario" value="'.$item["usuario"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Nueva Contraseña</label>
-                                    <input type="password" class="form-control" name="passwordEditar" placeholder="Ingresa tu Nueva Contraseña">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Sexo</label>
-                                    <input type="text" class="form-control" name="sexoEditar" placeholder="Ingresa tu Sexo" value="'.$item["sexo"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Email</label>
-                                    <input type="email" class="form-control" name="emailEditar" placeholder="Ingresa tu Email" value="'.$item["email"].'">
-                                </div>
-                                 <div class="form-group">
-                                    <label for="" class="control-label">Celular</label>
-                                   <input type="text" class="form-control" name="celularEditar" placeholder="Ingresa tu Celular" value="'.$item["celular"].'">
-                                </div>
-                                <div class="form-group">
-                                    <label for="sel1">Tipo de Usuario</label>
-                                    <select class="form-control" id="selTipo" name="tipoEditar" disabled>
-                                    <option>'.$item["tipo_user"].'</option>
-                                    </select>
-                                </div>';
-                                if ($item["tipo_user"]=="Estudiante"){
-                                    $cod_estudiante = $this->model_estudiante->ObtenerCodigoEstudiante($item["id_user"]);
-                                    echo '
+                                        <label for="" class="control-label">Primer Nombre</label>
+                                        <input type="text" class="form-control" name="primerNombreEditar" placeholder="Ingresa tu Primer Nombre" value="'.$item["primer_nombre"].'">
+                                    </div>
                                     <div class="form-group">
-                                        <label for="" class="control-label">Codigo Estudiante</label>
-                                        <input type="text" name="codigoEditar" class="form-control" placeholder="Ingresa el Codigo de Estudiante" value="'.$cod_estudiante.'">
+                                        <label for="" class="control-label">Segundo Nombre</label>
+                                        <input type="text" class="form-control" name="segundoNombreEditar" placeholder="Ingresa tu Segundo Nombre" value="'.$item["segundo_nombre"].'">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="" class="control-label">Apellido Paterno</label>
+                                        <input type="text" class="form-control" name="apellidoPaternoEditar" placeholder="Ingresa tu Apellido Paterno" value="'.$item["ap_paterno"].'">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Apellido Materno</label>
+                                        <input type="text" class="form-control" name="apellidoMaternoEditar" placeholder="Ingresa tu Apellido Materno" value="'.$item["ap_materno"].'">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Usuario</label>
+                                        <input type="text" class="form-control" name="usuarioEditar" placeholder="Ingresa tu Usuario" value="'.$item["usuario"].'">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Nueva Contraseña</label>
+                                        <input type="password" class="form-control" name="passwordEditar" value="'.$item["password"].'" placeholder="Ingresa tu Nueva Contraseña">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Sexo</label>
+                                        <input type="text" class="form-control" name="sexoEditar" placeholder="Ingresa tu Sexo" value="'.$item["sexo"].'">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Email</label>
+                                        <input type="email" class="form-control" name="emailEditar" placeholder="Ingresa tu Email" value="'.$item["email"].'">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="" class="control-label">Celular</label>
+                                       <input type="text" class="form-control" name="celularEditar" placeholder="Ingresa tu Celular" value="'.$item["celular"].'">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sel1">Tipo de Usuario</label>
+                                        <select class="form-control" id="selTipo" name="tipoEditar" disabled>
+                                        <option>'.$item["tipo_user"].'</option>
+                                        </select>
                                     </div>';
-
-                                }else if($item["tipo_user"]=="Secretaria"){
-                                    $secretarias = $this->model_secretaria->Listar();
-                                    $objeto = new SecretariaModel();
                                     
-                                }
-                                echo' <button type="submit" class="btn btn-primary">Guardar</button>
-                                 </form>
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                 </div>
-                                </div>
-                                </div>
-                                </div>
-                                </tr>';
-             
-
-        }
+                                    if ($item["tipo_user"]=="Estudiante"){
+                                        
+                                        $cod_estudiante = $this->model_estudiante->ObtenerCodigoEstudiante($item["id_user"]);
+                                        echo '
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Codigo Estudiante</label>
+                                            <input type="text" name="codigoEstudianteEditar" class="form-control" placeholder="Ingresa el Codigo de Estudiante" value="'.$cod_estudiante.'">
+                                        </div>';
+    
+                                    }else if($item["tipo_user"]=="Secretaria"){ 
+                                        $tipose= $this->model_secretaria->ObtenerTipoSecretaria($item["id_user"]);
+                                        $tipo_secretaria = new TipoSecretariaModel();
+                                        $result = $tipo_secretaria->Listar()->fetchAll(PDO::FETCH_ASSOC);
+                                        echo '<div class="form-group">
+                                                <label for="sel1">Tipo de Secretaria</label>
+                                                <select class="form-control" id="selTipoS" name="tipoEditarSecretaria">';
+                                            foreach ($result as $row){
+                                                echo '<option value="'.$row['id_tipo_secretaria'].'"';
+                                                if ($row['nombre_tipo_secretaria']==$tipose){
+                                                    echo 'selected="'.$row['nombre_tipo_secretaria'].'">';
+                                                }else{
+                                                    echo '">';
+                                                }
+                                                echo $row['nombre_tipo_secretaria'].'</option>';
+                                            }
+                                        echo '</select>
+                                        </div>';
+                                    }
+                                    echo '<button type="submit" class="btn btn-primary">Guardar</button>
+                                     </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                     </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </tr>';
+                 
+    
+            }
     }
 
     public function guardarUsuarioController(){
@@ -256,91 +266,126 @@ class UsuarioController{
                 $respuesta=$buscarUsuarioModel->buscarUsuariosModel($datosController,"t_usuarios","t_tipo_usuario");
                 foreach($respuesta as $item){
                     echo '<tr>
-                    <td>'.$item["dni"].'</td>
-                    <td>'.$item["primer_nombre"].' '.$item["segundo_nombre"].' '.$item["ap_paterno"].' '.$item["ap_materno"].'</td>
-                    <td>'.$item["usuario"].'</td>
-                    <td>'.$item["password"].'</td>
-                    <td>'.$item["sexo"].'</td>
-                    <td>'.$item["email"].'</td>
-                    <td>'.$item["celular"].'</td>
-                    <td>'.$item["tipo_user"].'</td>
-                    <td>8-12-2018</td>
-                    <td>
-                        <a href="#myModalModificar'.$item["id_user"].'" data-toggle="modal"><span  class="btn btn-info far fa-edit modificar"></span></a>
-                    </td>
-                    <td>
-                        <a href="index.php?action=usuario&idBorrar='.$item["id_user"].'"><span class="btn btn-danger fa fa-times eliminar"></span></a>
-                    </td>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModalModificar'.$item["id_user"].'" role="dialog">
-                        <div class="modal-dialog">
-                            
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h4 class="modal-title">Modificar Usuario</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="" method="post">
-                                        <input type="hidden" name="id_user" value="'.$item["id_user"].'">
-                                                    
-                    <div class="form-group">
-                    <label for="" class="control-label">DNI</label>
-                    <input type="text" class="form-control" name="dniEditar" placeholder="Ingresa tu dni" value="'.$item["dni"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Primer Nombre</label>
-                    <input type="text" class="form-control" name="primerNombreEditar" placeholder="Ingresa tu Primer Nombre" value="'.$item["primer_nombre"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" name="segundoNombreEditar" placeholder="Ingresa tu Segundo Nombre" value="'.$item["segundo_nombre"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Apellido Paterno</label>
-                    <input type="text" class="form-control" name="apellidoPaternoEditar" placeholder="Ingresa tu Apellido Paterno" value="'.$item["ap_paterno"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Apellido Materno</label>
-                    <input type="text" class="form-control" name="apellidoMaternoEditar" placeholder="Ingresa tu Apellido Materno" value="'.$item["ap_materno"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Usuario</label>
-                    <input type="text" class="form-control" name="usuarioEditar" placeholder="Ingresa tu Usuario" value="'.$item["usuario"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Nueva Contraseña</label>
-                    <input type="password" class="form-control" name="passwordEditar" placeholder="Ingresa tu Nueva Contraseña">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Sexo</label>
-                    <input type="text" class="form-control" name="sexoEditar" placeholder="Ingresa tu Sexo" value="'.$item["sexo"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Email</label>
-                    <input type="email" class="form-control" name="emailEditar" placeholder="Ingresa tu Email" value="'.$item["email"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Email</label>
-                <input type="text" class="form-control" name="celularEditar" placeholder="Ingresa tu Celular" value="'.$item["celular"].'">
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Tipo</label>
-                    <input type="text" class="form-control" placeholder="Ingresa tu Email" value="'.$item["tipo_user"].'">
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-                </div>
-                </div>
-                </tr>';
-                }
+                            <td>'.$item["dni"].'</td>
+                            <td>'.wordwrap($item["primer_nombre"].' '.$item["segundo_nombre"].' '.$item["ap_paterno"].' '.$item["ap_materno"],20,"<br />\n").'</td>
+                            <td>'.$item["usuario"].'</td>
+                            <td>'.$item["tipo_estado"].'</td>
+                            <td>'.$item["sexo"].'</td>
+                            <td>'.$item["email"].'</td>
+                            <td>'.$item["celular"].'</td>
+                            <td>'.$item["tipo_user"].'</td>
+                            <td>'.$item["fecha_registro"].'</td>
+                            <td>
+                                <a href="#myModalModificar'.$item["id_user"].'" data-toggle="modal"><span  class="btn btn-info far fa-edit modificar"></span></a>
+                            </td>
+                            <td>
+                            <a href="index.php?action=usuario&idBorrar='.$item["id_user"].'"><span class="btn btn-danger fa fa-times eliminar"></span></a>
+                            </td>
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalModificar'.$item["id_user"].'" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h4 class="modal-title">Modificar Usuario</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                <input type="hidden" name="id_user" value="'.$item["id_user"].'">
+                                                <div class="form-group">
+                                                <label for="" class="control-label">DNI</label>
+                                                 <input type="text" class="form-control" name="dniEditar" placeholder="Ingresa tu dni" value="'.$item["dni"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Primer Nombre</label>
+                                                <input type="text" class="form-control" name="primerNombreEditar" placeholder="Ingresa tu Primer Nombre" value="'.$item["primer_nombre"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Segundo Nombre</label>
+                                                <input type="text" class="form-control" name="segundoNombreEditar" placeholder="Ingresa tu Segundo Nombre" value="'.$item["segundo_nombre"].'">
+                                            </div>
+                                             <div class="form-group">
+                                                <label for="" class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" name="apellidoPaternoEditar" placeholder="Ingresa tu Apellido Paterno" value="'.$item["ap_paterno"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" name="apellidoMaternoEditar" placeholder="Ingresa tu Apellido Materno" value="'.$item["ap_materno"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Usuario</label>
+                                                <input type="text" class="form-control" name="usuarioEditar" placeholder="Ingresa tu Usuario" value="'.$item["usuario"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Nueva Contraseña</label>
+                                                <input type="password" class="form-control" name="passwordEditar" value="'.$item["password"].'" placeholder="Ingresa tu Nueva Contraseña">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Sexo</label>
+                                                <input type="text" class="form-control" name="sexoEditar" placeholder="Ingresa tu Sexo" value="'.$item["sexo"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="control-label">Email</label>
+                                                <input type="email" class="form-control" name="emailEditar" placeholder="Ingresa tu Email" value="'.$item["email"].'">
+                                            </div>
+                                             <div class="form-group">
+                                                <label for="" class="control-label">Celular</label>
+                                               <input type="text" class="form-control" name="celularEditar" placeholder="Ingresa tu Celular" value="'.$item["celular"].'">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sel1">Tipo de Usuario</label>
+                                                <select class="form-control" id="selTipo" name="tipoEditar" disabled>
+                                                <option>'.$item["tipo_user"].'</option>
+                                                </select>
+                                            </div>';
+                                            
+                                            if ($item["tipo_user"]=="Estudiante"){
+                                                
+                                                $cod_estudiante = $this->model_estudiante->ObtenerCodigoEstudiante($item["id_user"]);
+                                                echo '
+                                                <div class="form-group">
+                                                    <label for="" class="control-label">Codigo Estudiante</label>
+                                                    <input type="text" name="codigoEstudianteEditar" class="form-control" placeholder="Ingresa el Codigo de Estudiante" value="'.$cod_estudiante.'">
+                                                </div>';
+            
+                                            }else if($item["tipo_user"]=="Secretaria"){ 
+                                                $tipose= $this->model_secretaria->ObtenerTipoSecretaria($item["id_user"]);
+                                                $tipo_secretaria = new TipoSecretariaModel();
+                                                $result = $tipo_secretaria->Listar()->fetchAll(PDO::FETCH_ASSOC);
+                                                echo '<div class="form-group">
+                                                        <label for="sel1">Tipo de Secretaria</label>
+                                                        <select class="form-control" id="selTipoS" name="tipoEditarSecretaria">';
+                                                    foreach ($result as $row){
+                                                        echo '<option value="'.$row['id_tipo_secretaria'].'"';
+                                                        if ($row['nombre_tipo_secretaria']==$tipose){
+                                                            echo 'selected="'.$row['nombre_tipo_secretaria'].'">';
+                                                        }else{
+                                                            echo '">';
+                                                        }
+                                                        echo $row['nombre_tipo_secretaria'].'</option>';
+                                                    }
+                                                echo '</select>
+                                                </div>';
+                                            }
+                                            echo '<button type="submit" class="btn btn-primary">Guardar</button>
+                                             </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                             </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </tr>';
+                    }
             }
         }
+    }
+
+    public function impresionUsuariosController(){
+        $usuarioModel=new UsuarioModel();
+        $respuesta=$usuarioModel->mostrarUsuariosModel("t_usuarios","t_tipo_usuario","t_estados");
+        return $respuesta;
     }
 }
 ?>

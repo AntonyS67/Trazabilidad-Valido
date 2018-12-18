@@ -50,9 +50,9 @@ include "views/modules/cabezote.php";
                             </div>
                             <div class="form-group">
                                 <label for="" class="control-label">Fecha Inicio</label>
-                                <input type="text" name="fecha_inicio_nuevo"
-                                       class="form-control"
-                                       placeholder="Ingrese la Fecha de Inicio">
+                                <input type="date" step="1" name="fecha_inicio_nuevo"
+                                       class="form-control" min="<?php echo date("Y-m-d");?>"
+                                       placeholder="Ingrese la Fecha de Inicio" value="<?php echo date("Y-m-d");?>">
                             </div>
                             <div class="form-group">
                                 <label for="" class="control-label">Fecha Fin</label>
