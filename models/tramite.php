@@ -77,12 +77,12 @@ class TramiteModel
     {
         $con = new Conexion();
         $stmt = $con->conectar()->prepare(
-            "UPDATE $tabla set 
+            "UPDATE $tabla set fecha_inicio=:fecha_inicio,
                       estado=:estado
                       where id_tramite=:id_tramite"
         );
 
-        // $stmt->bindParam(":fecha_inicio", $datosModel["fecha_inicio"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_inicio", $datosModel["fecha_inicio"], PDO::PARAM_STR);
         // $stmt->bindParam(":fecha_fin", $datosModel["fecha_fin"], PDO::PARAM_STR);
         $stmt->bindParam(":estado", $datosModel["estado"], PDO::PARAM_STR);
         $stmt->bindParam(":id_tramite", $datosModel["id_tramite"], PDO::PARAM_INT);

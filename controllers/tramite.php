@@ -91,7 +91,6 @@ class TramiteController
         if (
             isset($_POST["cod_estudiante_nuevo"]) &&
             isset($_POST["id_tipo_tramite_nuevo"]) &&
-            isset($_POST["fecha_fin_nuevo"]) &&
             isset($_POST["estado_nuevo"])
         ) {
 
@@ -118,8 +117,6 @@ class TramiteController
     public function modificarTramiteController()
     {
         if (
-            isset($_POST["cod_estudiante"]) &&
-            isset($_POST["id_tipo_tramite"]) &&
             isset($_POST["fecha_inicio"]) &&
             isset($_POST["estado"])
         ) {
