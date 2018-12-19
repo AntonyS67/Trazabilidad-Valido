@@ -66,6 +66,22 @@ class EstudianteModel{
 		}
     }
 
+
+    public function ActualizarCodigo($c,$id){
+		try {
+			$sql = "UPDATE t_estudiante SET cod_estudiante = ? WHERE id_user = ? " ;
+
+			if ($this->pdo->conectar()->prepare($sql)->execute(array($c,$id))){
+                return "ok";
+            }else{
+                return die (mysql_error());
+            }
+
+		} catch (Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 }
 
 

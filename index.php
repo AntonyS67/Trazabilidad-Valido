@@ -8,6 +8,7 @@ require_once "models/tramite.php";
  require_once 'models/secretaria.php';
  require_once 'models/director.php';
  require_once 'models/estudiante.php';
+ require_once 'models/tipo_secretaria.php';
 
 require_once "controllers/template.php";
 require_once "controllers/enlaces.php";

@@ -1,6 +1,7 @@
 <?php
 require_once "conexion.php";
 class UsuarioModel{
+    private $pdo;
     public $id;
     public $usuario;
     public $email;
@@ -17,7 +18,15 @@ class UsuarioModel{
     public $estado;
     public $fecha_registro;
   
-  
+    public function __construct()
+    {
+        try {
+            $this->pdo = new Conexion();
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+
+    }
     
 
     public function mostrarUsuariosModel($tabla1,$tabla2,$tabla3){
@@ -35,6 +44,24 @@ class UsuarioModel{
 		$stmt -> close();
     }
     
+
+    public function Listar()
+    {
+        try {
+            $con=new Conexion();
+            $sql = $con->conectar()->prepare("select * from t_usuarios");
+            $sql->execute();
+            return $sql->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function ListarTipoUsuarios()
+    {
+        $sql2 = $this->pdo->conectar()->query('select id_tipo_user,tipo_user FROM t_tipo_usuario');
+        return $sql2;
+    }
 
     	//Funcion donde se registra usuarios
 	public function Registrar(UsuarioModel $data)
@@ -74,6 +101,48 @@ class UsuarioModel{
 	}
    
 
+    public function ActualizarUsuario(UsuarioModel $data)
+	{
+		try 
+		{
+		$sql = "UPDATE t_usuarios SET 
+                usuario = ?,
+                email = ?,
+                primer_nombre = ?,
+                segundo_nombre = ?,
+                ap_paterno = ?,
+                ap_materno = ?,
+                dni = ?,
+                celular = ?,
+                sexo     = ?,
+                password = ? 
+                WHERE id_user = ?";
+
+        $con=new Conexion();
+        $stmt=$con->conectar()->prepare($sql)
+        ->execute(
+            array(
+                        $data->usuario,
+                        $data->email,
+                        $data->primer_nombre,
+                        $data->segundo_nombre,
+                        $data->ap_paterno,
+                        $data->ap_materno,
+                        $data->dni,
+                        $data->celular,
+                        $data->sexo,
+                        $data->password,
+                        $data->id
+            )
+        );
+
+		} catch (Exception $e) 
+		{
+			die($e->getMessage());
+		}
+	}
+   
+
     public function ObteneridUser($email)
 	{
 		try 
@@ -91,73 +160,62 @@ class UsuarioModel{
 		{
 			die($e->getMessage());
 		}
+    }
+    
+    public function ObteneridTipoUser($id)
+	{
+		try 
+		{
+         
+            $con=new Conexion();
+            $stm = $con->conectar()->prepare("SELECT id_tipo_user FROM t_usuarios WHERE id_user = ?");
+			          
+			$stm->execute(array($id));
+			
+            $row= $stm->fetch();
+            return $row['id_tipo_user'];
+
+		} catch (Exception $e) 
+		{
+			die($e->getMessage());
+		}
 	}
 
-    public function modificarUsuarioModel($datosModel,$tabla){
-        $con=new Conexion();
-        $stmt=$con->conectar()->prepare("UPDATE $tabla set usuario=:usuario,email=:email,primer_nombre=:primer_nombre,
-        segundo_nombre=:segundo_nombre,ap_paterno=:ap_paterno,ap_materno=:ap_materno,dni=:dni,celular=:celular,sexo=:sexo,password=:password where id_user=:id");
-
-        $stmt->bindParam(":usuario",$datosModel["usuario"],PDO::PARAM_STR);
-        $stmt->bindParam(":email",$datosModel["email"],PDO::PARAM_STR);
-        $stmt->bindParam(":primer_nombre",$datosModel["primer_nombre"],PDO::PARAM_STR);
-        $stmt->bindParam(":segundo_nombre",$datosModel["segundo_nombre"],PDO::PARAM_STR);
-        $stmt->bindParam(":ap_paterno",$datosModel["ap_paterno"],PDO::PARAM_STR);
-        $stmt->bindParam(":ap_materno",$datosModel["ap_materno"],PDO::PARAM_STR);
-        $stmt -> bindParam(":dni", $datosModel["dni"], PDO::PARAM_INT);
-        $stmt->bindParam(":celular",$datosModel["celular"],PDO::PARAM_STR);
-        $stmt->bindParam(":sexo",$datosModel["sexo"],PDO::PARAM_STR);
-        $stmt->bindParam(":password",$datosModel["password"],PDO::PARAM_STR);
-        $stmt -> bindParam(":id", $datosModel["id_user"], PDO::PARAM_INT);
-     
-
-        if($stmt->execute()){
-			return "ok";
-		}
-		else{
-			return "error";
-		}
-
-		$stmt->close();
-
-    }
-
+    
     public function eliminarUsuarioModel($datosModel,$tabla){
         $con=new Conexion();
-        $stmt = $con->conectar()->prepare("DELETE FROM $tabla WHERE id_user = :id");
+        $stmt = $con->conectar()->prepare("UPDATE $tabla set id_estado = :estado WHERE id_user = :id");
 
-		$stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $datosModel["id"], PDO::PARAM_INT);
+        $stmt->bindParam(":estado", $datosModel["estado"], PDO::PARAM_INT);
 
-		if($stmt->execute()){
-
-			return "ok";
-
-		}
-
-		else{
-
-			return "error";
-
-		}
-
-		$stmt->close();
-        
-    }
-
-
-    public function buscarUsuariosModel($datosModel,$tabla1,$tabla2){
-        $con=new Conexion();
-        $stmt = $con->conectar()->prepare("SELECT $tabla1.id_user,$tabla1.primer_nombre,$tabla1.segundo_nombre,
-        $tabla1.ap_paterno,$tabla1.ap_materno,$tabla1.dni,$tabla1.celular,$tabla1.sexo,$tabla1.usuario,$tabla1.password, $tabla1.email,$tabla2.tipo_user
-        FROM $tabla1,$tabla2 where $tabla1.id_tipo_user=$tabla2.id_tipo_user and ($tabla1.usuario=:usuario or $tabla1.dni=:dni)");
-
-        $stmt->bindParam(":usuario",$datosModel,PDO::PARAM_STR);
-        $stmt->bindParam(":dni",$datosModel,PDO::PARAM_STR);
 		$stmt -> execute();
 
 		return $stmt -> fetchAll();
 
 		$stmt -> close();
+        
     }
+
+
+    public function buscarUsuariosModel($datosModel,$tabla1,$tabla2,$tabla3){
+        $con=new Conexion();
+        $stmt = $con->conectar()->prepare("SELECT $tabla1.id_user,$tabla1.primer_nombre,$tabla1.segundo_nombre,
+        $tabla1.ap_paterno,$tabla1.ap_materno,$tabla1.dni,$tabla1.celular,$tabla1.sexo,$tabla1.password,
+        $tabla1.usuario, $tabla1.email,$tabla2.tipo_user,$tabla1.id_estado,$tabla1.fecha_registro,
+        $tabla3.tipo_estado FROM $tabla1,$tabla2,$tabla3 where 
+        $tabla1.id_tipo_user = $tabla2.id_tipo_user AND $tabla1.id_estado = $tabla3.id_estado AND
+        ($tabla1.usuario = :usuario OR $tabla1.dni = :dni)");
+        $stmt->bindParam(":usuario",$datosModel,PDO::PARAM_STR);
+        $stmt->bindParam(":dni",$datosModel,PDO::PARAM_STR);
+        $stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+    
+        
+    }
+
     
 }

@@ -150,4 +150,10 @@ class TramiteController
             }
         }
     }
+
+    public function impresionTramitesController(){
+        $tramiteModel=new TramiteModel();
+        $respuesta=$tramiteModel->mostrarTramiteModel("t_tramite");
+        return $respuesta;
+    }
 }
